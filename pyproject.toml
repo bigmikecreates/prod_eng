@@ -1,0 +1,11 @@
+[project]
+name="prod_eng"
+version="1.0.0"
+description="Repository for Production Engineering Practice"
+dependencies=[
+	"requests"
+]
+
+[build-system]
+requires=["setuptools", "wheel"]
+build-backend="setuptools.build_meta"
