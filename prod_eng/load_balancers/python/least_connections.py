@@ -1,14 +1,15 @@
 from dataclasses import dataclass
+from server import Server as BaseServer
 
 @dataclass
-class Server:
-    name: str
+class Server(BaseServer):
     active_connections: int = 0
-
+    
     def handle_request(self):
         self.active_connections += 1
-        print(f"{self.name} handling request. Active: {self.active_connections}")
-
+        super().handle_request()
+        print(f"Active: {self.active_connections}.")
+        
     def finish_request(self):
         if self.active_connections > 0:
             self.active_connections -= 1
