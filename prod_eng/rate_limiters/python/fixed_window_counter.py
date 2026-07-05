@@ -1,7 +1,7 @@
 import time
 from collections import defaultdict
 
-class FixedWindowRateLimiter:
+class FixedWindowCounterRateLimiter:
     def __init__(self, max_requests: int, window_seconds: int):
         self.max_requests = max_requests
         self.window_seconds = window_seconds
