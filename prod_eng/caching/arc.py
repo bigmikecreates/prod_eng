@@ -51,3 +51,40 @@ Common Use Cases
 - Database engines
 - High-performance storage appliances
 """
+
+from collections import deque
+
+class ARCCache:
+    """
+    Adaptive Replacement Cache
+
+    Balances recency and frequency using two real caches and two ghost caches.
+    """
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+
+        self.t1 = OrderedDict() # recent cache
+        self.t2 = OrderedDict() # frequent cache
+        self.b1 = OrderedDict() # recent ghost
+        self.b2 = OrderedDict() # frequent ghost
+
+        self.p = 0  # adaptive target size for T1
+
+    def get(self, key):
+        if key in self.t1:
+            value = self.t1.pop(key)
+            self.t2[key] = value
+            return value
+
+        if key in self.t2:
+            value = self.t2.pop(key)
+            self.t2[key] = value
+            return value
+
+        return -1
+
+    def put(self, key, value):
+        if self.capacity <= 0:
+        return
+
