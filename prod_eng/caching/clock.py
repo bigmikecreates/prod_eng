@@ -50,3 +50,72 @@ Common Use Cases
 - Virtual memory management
 - Large memory caches
 """
+
+class ClockEntry:
+    """
+    Stores one cache entry and its reference bit.
+    """
+
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+        self.ref = 1
+
+class ClockCache:
+    """
+    CLOCK cache.
+
+    Approximates LRU using a circular buffer and rotating clock hand.
+    """
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.entries = [None] * capacity
+        self.cache = {}
+        self.hand = 0
+        self.size = 0
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+
+        index = self.cache[key]
+        entry = self.entries[index]
+        entry.ref = 1
+
+        return entry.value
+
+    def put (self, key, value):
+        if self.capacity <= 0:
+            return
+
+        if key in self.cache:
+            index = self.cache[key]
+            entry = self.entries[index]
+            entry.value = value
+            entry.ref = 1
+            return
+
+        if self.size < self.capacity:
+            entry = ClockEntry(key, value)
+            self.entries[self.size] = entry
+            self.cache[key] = self.size
+            self.size += 1
+            return
+
+        while True:
+            entry = self.entries[self.hand]
+
+            if entry.ref == 1:
+                entry.ref = 0
+                self.hand = (self.hand + 1) % self.capacity
+            else:
+                del self.cache[entry.key]
+
+                new_entry = ClockEntry(key, value)
+                self.entries[self.hand] = new_entry
+                self.cache[key] = self.hand
+
+                self.hand = (self.hand + 1) % self.capacity
+                return
+    
