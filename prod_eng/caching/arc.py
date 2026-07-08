@@ -52,7 +52,7 @@ Common Use Cases
 - High-performance storage appliances
 """
 
-from collections import deque
+from collections import deque, OrderedDict
 
 class ARCCache:
     """
