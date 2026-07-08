@@ -70,7 +70,7 @@ Common Use Cases
 from collections import OrderedDict
 
 class MRUCache:
-    def __init__(self, capcity: int):
+    def __init__(self, capacity: int):
         self.capacity = capacity
         self.cache = OrderedDict()
 
