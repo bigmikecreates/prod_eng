@@ -3,7 +3,10 @@ name="prod_eng"
 version="1.0.0"
 description="Repository for Production Engineering Practice"
 dependencies=[
-	"requests"
+	"requests",
+	"httpx",
+	"fastapi",
+	"uvicorn"
 ]
 
 [build-system]
