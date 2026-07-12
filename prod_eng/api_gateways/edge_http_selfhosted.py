@@ -12,7 +12,7 @@ from fastapi.responses import StreamingResponse
 
 SERVICES_REGISTRY = {
     "users": "http://localhost:8001",
-    "products": "http:localhost:8002",
+    "products": "http://localhost:8002",
     "orders": "http://localhost:8003",
 }
 
@@ -72,12 +72,12 @@ def filter_response_headers(
 
 async def stream_and_close(
         response: httpx.Response,
-) -> AsyncInterator[bytes]:
+) -> AsyncIterator[bytes]:
     try:
         async for chunk in response.aiter_raw():
             yield chunk
     finally:
-        await response.close()
+        await response.aclose()
 
 @app.api_route(
     "/{service}/{path:path}",
@@ -98,3 +98,51 @@ async def route_gateway(
     _api_key: str = Depends(verify_api_key),
 ) -> StreamingResponse:
     base_url = SERVICES_REGISTRY.get(service)
+
+    if base_url is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Unknown service: {service}",
+        )
+    
+    downstream_url = f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+
+    client: httpx.AsyncClient = request.app.state.http_client
+
+    downstream_request = client.build_request(
+        method=request.method,
+        url=downstream_url,
+        params=request.query_params,
+        headers={
+            name: value
+            for name, value in request.headers.items()
+            if name.lower() not in HOP_BY_HOP_HEADERS
+            and name.lower() not in {
+                "host",
+                "content-length",
+            }
+        },
+        content=request.stream(),
+    )
+
+    try:
+        downstream_response = await client.send(
+            downstream_request,
+            stream=True,
+        )
+    except httpx.TimeoutException as exc:
+        raise HTTPException(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            detail="Downstream service timed out",
+        ) from exc
+    except httpx.RequestError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="Unable to connect to downstream service",
+        ) from exc
+    
+    return StreamingResponse(
+        content=stream_and_close(downstream_response),
+        status_code=downstream_response.status_code,
+        headers=filter_response_headers(downstream_response),
+    )
