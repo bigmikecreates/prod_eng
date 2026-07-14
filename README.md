@@ -13,7 +13,7 @@ This repository focuses on studying software infrastructure that fall under the 
 
 ---
 
-The core concepts/components for each infrastructure type are listed below:
+The core concepts/components for each infrastructure type are listed below (each infrastructure type offers a taxonomy for a deeper dive - link is lsited below too):
 
 ## 1. APPLICATION INFRASTRUCTURE
 
@@ -30,6 +30,8 @@ The core concepts/components for each infrastructure type are listed below:
 11. Authentication Service
 12. Service Discovery
 
+[Deep Dive]()
+
 ## 2. DATA INFRASTRUCTURE
 
 1. Database
@@ -38,6 +40,8 @@ The core concepts/components for each infrastructure type are listed below:
 4. Search Engine
 5. Vector Store
 
+[Deep Dive]()
+
 ## 3. PLATFORM INFRASTRUCTURE
 
 1. Observability
@@ -45,6 +49,8 @@ The core concepts/components for each infrastructure type are listed below:
 3. Secrets
 4. Feature Flags
 5. Plugin System
+
+[Deep Dive]()
 
 ## 4. DISTRIBUTED SYSTEM INFRASTRUCTURE
 
@@ -55,4 +61,4 @@ The core concepts/components for each infrastructure type are listed below:
 5. Circuit Breakers
 6. Coordination
 
-
+[Deep Dive]()

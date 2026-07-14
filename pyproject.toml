@@ -1,5 +1,5 @@
 [project]
-name="prod_eng"
+name="sw_infra"
 version="1.0.0"
 description="Repository for Production Engineering Practice"
 dependencies=[

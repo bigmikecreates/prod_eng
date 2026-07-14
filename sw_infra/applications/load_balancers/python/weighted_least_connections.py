@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from server import Server as BaseServer
+from prod_eng.applications.load_balancers.python.server import Server as BaseServer
 
 @dataclass
 class Server(BaseServer):

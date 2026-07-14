@@ -1,4 +1,4 @@
-from server import Server
+from prod_eng.applications.load_balancers.python.server import Server
 
 class LeastResponseTimeLoadBalancer:
     def __init__(self, servers: list[Server]):

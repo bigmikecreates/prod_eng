@@ -1,5 +1,5 @@
 import hashlib
-from server import Server
+from prod_eng.applications.load_balancers.python.server import Server
 
 class IPHashLoadBalancer:
     def __init__(self, servers: list[Server]):
