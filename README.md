@@ -2,6 +2,8 @@
 
 # SOFTWARE INFRASTRUCTURE
 
+</div>
+
 This repository focuses on studying software infrastructure that fall under the following categories:
 
 1. Application Infrastructure
@@ -9,9 +11,9 @@ This repository focuses on studying software infrastructure that fall under the 
 3. Platform Infrastructure
 4. Distributed System Infrastructure
 
-</div>
+---
 
-Below lists the core concepts for each type of infrastructure.
+The core concepts/components for each infrastructure type are listed below:
 
 ## 1. APPLICATION INFRASTRUCTURE
 
