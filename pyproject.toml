@@ -6,7 +6,8 @@ dependencies=[
 	"requests",
 	"httpx",
 	"fastapi",
-	"uvicorn"
+	"uvicorn",
+	"uuid"
 ]
 
 [build-system]
