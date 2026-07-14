@@ -92,3 +92,5 @@ app = FastAPI(
     openapi_url=None,
     lifespan=lifespan
 )
+
+async def authenticate_internal_service(request: Request) -> str:
