@@ -1,3 +1,79 @@
+"""
+HTTP API Gateway
+================
+
+Overview
+--------
+This module implements an asynchronous edge HTTP API Gateway using FastAPI
+and HTTPX.
+
+An API Gateway acts as the single entry point into a distributed system,
+accepting requests from external clients and routing them to the appropriate
+backend microservice. Rather than clients communicating directly with every
+service, they interact only with the gateway, which centralizes concerns such
+as routing, authentication, request forwarding, connection management, and
+error handling.
+
+This implementation functions as a lightweight reverse proxy for internal
+services. Requests are dynamically routed based on the first path segment
+(e.g. `/users/...`, `/products/...`, `/orders/...`) using an in-memory
+service registry.
+
+Architecture
+------------
+Incoming client requests follow the pipeline below:
+
+1. Receive an incoming HTTP request.
+2. Authenticate the request using an API key dependency.
+3. Resolve the target service from the service registry.
+4. Construct the downstream HTTP request.
+5. Forward headers, query parameters, and streaming request body.
+6. Stream the downstream response back to the client.
+7. Close downstream resources after streaming completes.
+
+The gateway is intentionally transparent, preserving request methods,
+status codes, response bodies, and most headers while removing
+hop-by-hop headers defined by RFC 9110.
+
+Features
+--------
+- Dynamic path-based request routing
+- Reverse proxy for internal HTTP services
+- Shared asynchronous HTTP connection pool
+- Streaming request and response bodies
+- API key authentication
+- Gateway timeout handling
+- Bad Gateway handling for unavailable services
+- Hop-by-hop header filtering
+- Connection lifecycle management using FastAPI lifespan events
+
+Design Principles
+-----------------
+The implementation emphasizes:
+
+- Asynchronous, non-blocking I/O
+- Minimal request buffering
+- Connection reuse via a shared HTTPX AsyncClient
+- Transparent proxy semantics
+- Separation of infrastructure concerns from business logic
+- Simplicity suitable for self-hosted deployments and learning purposes
+
+This gateway intentionally focuses on request forwarding rather than advanced
+API management features such as service discovery, load balancing, rate
+limiting, retries, circuit breakers, caching, distributed tracing, or
+observability, all of which can be layered on incrementally.
+
+Use Cases
+---------
+This component is suitable as:
+
+- An edge gateway for microservice architectures
+- A reverse proxy for internal APIs
+- A local development gateway
+- A foundation for service mesh concepts
+- A learning implementation of API gateway architecture
+"""
+
 from __future__ import annotations
 
 from collections.abc import AsyncIterator
@@ -91,6 +167,7 @@ async def stream_and_close(
         "HEAD",
     ]
 )
+
 async def route_gateway(
     service: str,
     path: str,
