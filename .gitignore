@@ -3,3 +3,4 @@
 /dist
 *.egg-info
 *.pyproject.toml.swp
+*.txt

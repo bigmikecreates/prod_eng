@@ -30,7 +30,7 @@ The core concepts/components for each infrastructure type are listed below (each
 11. Authentication Service
 12. Service Discovery
 
-[Deep Dive]()
+[Deep Dive](sw_infra/applications/[docs]deep_dive/OVERVIEW.md)
 
 ## 2. DATA INFRASTRUCTURE
 
@@ -40,7 +40,7 @@ The core concepts/components for each infrastructure type are listed below (each
 4. Search Engine
 5. Vector Store
 
-[Deep Dive]()
+[Deep Dive](sw_infra/data/[docs]deep_dive/OVERVIEW.md)
 
 ## 3. PLATFORM INFRASTRUCTURE
 
@@ -50,7 +50,7 @@ The core concepts/components for each infrastructure type are listed below (each
 4. Feature Flags
 5. Plugin System
 
-[Deep Dive]()
+[Deep Dive](sw_infra/platforms/[docs]deep_dive/OVERVIEW.md)
 
 ## 4. DISTRIBUTED SYSTEM INFRASTRUCTURE
 
@@ -61,4 +61,4 @@ The core concepts/components for each infrastructure type are listed below (each
 5. Circuit Breakers
 6. Coordination
 
-[Deep Dive]()
+[Deep Dive](sw_infra/distributed_systems/[docs]deep_dive/OVERVIEW.md)
